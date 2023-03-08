@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit page</title>
+</head>
+<body>
+    <h1>Welcome to your Edit Page</h1>
+    <form action="/<%= uniqueData.id %>?_method=PATCH" method="post" >
+        <label for="id">ID : </label>
+        <span id="id"><%= uniqueData.id %> </span>
+        <br>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" value="<%= uniqueData.username %> ">
+        <br>
+        <button>Submit</button>
+        <br><br>
+        <a href="/edit/<%= uniqueData.id %>">Back</a>
+        <br><br>
+        <a href="/">Home</a>
+    </form>
+</body>
+</html>
