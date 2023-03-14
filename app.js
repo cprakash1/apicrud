@@ -16,13 +16,24 @@ app.use(express.static(path.join(__dirname,'static')));
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
 
+
+//instead of passing message of flash in old way using {message:req.flash('success)} we can use our own middleware
+// this can be done using locals
+//best way
+//https://expressjs.com/en/5x/api.html#app.locals
+app.use((req,res,next)=>{
+    const message=req.flash('success')
+    res.locals.message=message
+    next()
+})
+
+
 app.get('/',(req,res)=>{
     // console.log(data)
     // console.log(req.flash('success'))
-    const message=req.flash('success')
-    // const message=1
-    console.log(message)
-    res.status(200).render('home',{data,message});
+    // const message=req.flash('success')
+    // console.log(message)
+    res.status(200).render('home',{data});
 });
 app.get('/add',(req,res)=>{
     res.status(200).render('add');
