@@ -4,7 +4,11 @@ const path=require('path');
 const bodyParser = require('body-parser')
 const methodOverride=require('method-override')
 const { v4: uuidv4 } = require('uuid');
+const flash=require('connect-flash');
+const session=require('express-session')
 
+app.use(session({secret:'hi'}))
+app.use(flash())
 app.use(methodOverride('_method'))
 app.use(bodyParser.json()) 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -13,8 +17,12 @@ app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
 
 app.get('/',(req,res)=>{
-    console.log(data)
-    res.status(200).render('home',{data});
+    // console.log(data)
+    // console.log(req.flash('success'))
+    const message=req.flash('success')
+    // const message=1
+    console.log(message)
+    res.status(200).render('home',{data,message});
 });
 app.get('/add',(req,res)=>{
     res.status(200).render('add');
@@ -23,6 +31,7 @@ app.post('/',(req,res)=>{
     let {username}=req.body;
     id=uuidv4();
     data.push({id,username});
+    req.flash('success','your data has been created')
     res.redirect('/');
 });
 app.get('/:id',(req,res)=>{
